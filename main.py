@@ -21,20 +21,31 @@ def get_news_names(html):
         try:
             link = block.find('a', class_='storylink').get('href')
             name = block.find('a', class_='storylink').get_text()
+            names.append({name: link})
         except:
             continue
-        if link:
-            print(link)
-            print(name)
+        # if link:
+        #     print(link)
+        #     print(name)
         # print(block)
         # print()
         # names.append(name)
-    # return names
+    return names
+
+
+def check_exists_topic(name, dir='topics'):
+    # if not os.path.exists(dir):
+    #     logging.info("Log directory does not exists")
+    #     return
+    if name in os.listdir(dir):
+        logging.info("Topic already downloaded")
+        return
 
 
 def main():
     html = get_file(url)
-    return get_news_names(html)
+    names = get_news_names(html)
+    check_exists_topic(names[0].keys())
 
 # def write_image(data):
 #     dirname = None
